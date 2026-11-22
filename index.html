@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#15132f">
+<title>NEXUS Browser</title>
+
+<style>
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
+
+body{
+ background:#15132f;
+ color:white;
+ font-family:Arial,sans-serif;
+ min-height:100vh;
+ overflow-x:hidden;
+}
+
+.app{
+ max-width:600px;
+ min-height:100vh;
+ margin:auto;
+ padding:25px 22px 100px;
+ position:relative;
+}
+
+/* HEADER */
+
+.header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ height:45px;
+}
+
+.logo{
+ font-size:23px;
+ font-weight:800;
+ letter-spacing:3px;
+}
+
+.logo span{
+ color:#8d42ff;
+}
+
+.menu-btn{
+ width:40px;
+ height:40px;
+ border:0;
+ border-radius:50%;
+ background:#292647;
+ color:white;
+ font-size:23px;
+}
+
+/* BRAND */
+
+.brand{
+ text-align:center;
+ margin-top:100px;
+ margin-bottom:42px;
+}
+
+.brand h1{
+ font-size:52px;
+ font-weight:300;
+ letter-spacing:-3px;
+}
+
+.brand h1 span{
+ color:#a46aff;
+ font-weight:700;
+}
+
+/* SEARCH */
+
+.search-box{
+ height:56px;
+ background:#29283e;
+ border-radius:35px;
+ display:flex;
+ align-items:center;
+ padding:0 15px;
+ gap:12px;
+ box-shadow:0 5px 20px #0002;
+}
+
+.google-icon{
+ font-size:23px;
+ font-weight:bold;
+ color:#4285f4;
+}
+
+.search-box input{
+ flex:1;
+ min-width:0;
+ border:0;
+ outline:0;
+ background:transparent;
+ color:white;
+ font-size:14px;
+}
+
+.search-box input::placeholder{
+ color:#aaa9b7;
+}
+
+.search-box button{
+ border:0;
+ background:transparent;
+ color:#ddd;
+ font-size:19px;
+ padding:5px;
+}
+
+/* SPEED DIAL */
+
+.speed-dial{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:28px 10px;
+ margin-top:38px;
+}
+
+.site{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:9px;
+ text-decoration:none;
+ color:white;
+ min-width:0;
+}
+
+.site-icon{
+ width:55px;
+ height:55px;
+ border-radius:17px;
+ background:#25233e;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ font-size:25px;
+ font-weight:bold;
+ box-shadow:0 5px 15px #0003;
+ transition:.2s;
+}
+
+.site:active .site-icon{
+ transform:scale(.88);
+}
+
+.site-name{
+ font-size:11px;
+ color:#c4c2d2;
+ max-width:75px;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
+}
+
+.youtube{background:#fff;color:#f00}
+.facebook{background:#1877f2;color:white}
+.google{background:#fff;color:#4285f4}
+.instagram{
+ background:linear-gradient(45deg,#ffb300,#e1306c,#833ab4);
+}
+.wikipedia{background:#fff;color:#222}
+.add{
+ background:#29283e;
+ color:white;
+ border:1px solid #45425d;
+ font-size:30px;
+}
+
+/* NEWS */
+
+.news-nav{
+ display:flex;
+ gap:27px;
+ overflow-x:auto;
+ white-space:nowrap;
+ margin-top:70px;
+ padding-bottom:14px;
+ border-bottom:1px solid #333149;
+ scrollbar-width:none;
+}
+
+.news-nav span{
+ color:#aaa9bb;
+ font-size:13px;
+}
+
+.news-nav .active{
+ color:white;
+ border-bottom:2px solid #a46aff;
+ padding-bottom:14px;
+ margin-bottom:-15px;
+}
+
+.news-title{
+ font-size:18px;
+ margin:23px 0 15px;
+}
+
+.news-card{
+ background:#201e36;
+ border-radius:15px;
+ padding:16px;
+ margin-bottom:13px;
+}
+
+.news-card h3{
+ font-size:15px;
+ line-height:1.5;
+}
+
+.news-card p{
+ color:#aaa9b7;
+ font-size:11px;
+ margin-top:10px;
+}
+
+/* BOTTOM MENU */
+
+.bottom-menu{
+ position:fixed;
+ bottom:18px;
+ left:50%;
+ transform:translateX(-50%);
+ width:220px;
+ height:57px;
+ border-radius:40px;
+ background:#282443;
+ display:flex;
+ align-items:center;
+ justify-content:space-around;
+ box-shadow:0 5px 25px #0008;
+ z-index:10;
+}
+
+.bottom-menu button{
+ background:transparent;
+ border:0;
+ color:#c9c6dc;
+ font-size:22px;
+ width:45px;
+ height:45px;
+ border-radius:50%;
+}
+
+.bottom-menu .main-btn{
+ background:#6325ef;
+ color:white;
+ font-size:25px;
+}
+
+/* POPUP */
+
+.popup{
+ display:none;
+ position:fixed;
+ bottom:90px;
+ left:50%;
+ transform:translateX(-50%);
+ width:240px;
+ padding:12px;
+ background:#292641;
+ border-radius:17px;
+ z-index:20;
+ box-shadow:0 5px 25px #0008;
+}
+
+.popup button{
+ width:100%;
+ padding:13px;
+ background:transparent;
+ border:0;
+ color:white;
+ text-align:left;
+ font-size:14px;
+}
+
+.popup button:active{
+ background:#403b62;
+}
+
+@media(min-width:600px){
+ .app{padding-top:35px}
+ .brand{margin-top:115px}
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#15132f">
+</head>
+<body>
+
+<div class="app">
+
+ <header class="header">
+  <div class="logo">NEXUS<span>.</span></div>
+  <button class="menu-btn" onclick="toggleMenu()">⋮</button>
+ </header>
+
+ <section class="brand">
+  <h1>NEXUS<span>.</span></h1>
+ </section>
+
+ <form class="search-box" onsubmit="searchWeb(event)">
+  <div class="google-icon">G</div>
+
+  <input
+   type="text"
+   id="search"
+   placeholder="Search or enter an address"
+   autocomplete="off"
+  >
+
+  <button type="button" onclick="showQR()">▦</button>
+  <button type="button" onclick="voiceSearch()">🎙</button>
+ </form>
+
+ <section class="speed-dial" id="speedDial">
+
+  <a class="site" href="https://www.theverge.com">
+   <div class="site-icon">V</div>
+   <span class="site-name">The Verge</span>
+  </a>
+
+  <a class="site" href="https://www.engadget.com">
+   <div class="site-icon">e</div>
+   <span class="site-name">Engadget</span>
+  </a>
+
+  <a class="site" href="https://mashable.com">
+   <div class="site-icon">M</div>
+   <span class="site-name">Mashable</span>
+  </a>
+
+  <a class="site" href="https://www.gizmodo.com">
+   <div class="site-icon" style="background:#3335d9">G</div>
+   <span class="site-name">Gizmodo</span>
+  </a>
+
+  <a class="site" href="https://youtube.com">
+   <div class="site-icon youtube">▶</div>
+   <span class="site-name">YouTube</span>
+  </a>
+
+  <a class="site" href="https://notion.so">
+   <div class="site-icon wikipedia">N</div>
+   <span class="site-name">Notion</span>
+  </a>
+
+  <a class="site" href="https://facebook.com">
+   <div class="site-icon facebook">f</div>
+   <span class="site-name">Facebook</span>
+  </a>
+
+  <a class="site" href="https://instagram.com">
+   <div class="site-icon instagram">◎</div>
+   <span class="site-name">Instagram</span>
+  </a>
+
+  <a class="site" href="https://google.com">
+   <div class="site-icon google">G</div>
+   <span class="site-name">Google</span>
+  </a>
+
+  <a class="site" href="https://wikipedia.org">
+   <div class="site-icon wikipedia">W</div>
+   <span class="site-name">Wikipedia</span>
+  </a>
+
+  <div class="site" onclick="addWebsite()">
+   <div class="site-icon add">+</div>
+   <span class="site-name">Add Site</span>
+  </div>
+
+ </section>
+
+ <section class="news-nav">
+  <span class="active">For You</span>
+  <span>Technology</span>
+  <span>Entertainment</span>
+  <span>Top Stories</span>
+ </section>
+
+ <h2 class="news-title">Discover</h2>
+
+ <div class="news-card">
+  <h3>Welcome to NEXUS Browser</h3>
+  <p>Your internet. Your world. Your NEXUS.</p>
+ </div>
+
+ <div class="news-card">
+  <h3>Explore the web with NEXUS</h3>
+  <p>Search anything and discover new websites.</p>
+ </div>
+
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+
+<div class="bottom-menu">
+ <button onclick="location.reload()">↻</button>
+ <button onclick="document.getElementById('search').focus()">⌕</button>
+ <button class="main-btn" onclick="toggleMenu()">☰</button>
+ <button onclick="showBookmarks()">☆</button>
+</div>
+
+<!-- MENU -->
+
+<div class="popup" id="popup">
+ <button onclick="toggleTheme()">◐ Change Theme</button>
+ <button onclick="showBookmarks()">☆ Bookmarks</button>
+ <button onclick="showHistory()">◷ History</button>
+ <button onclick="addWebsite()">＋ Add Website</button>
+</div>
+
+<script>
+
+function searchWeb(e){
+ e.preventDefault();
+
+ let value=document.getElementById("search").value.trim();
+
+ if(!value)return;
+
+ let url;
+
+ if(/^https?:\/\//i.test(value)){
+  url=value;
+ }
+ else if(/^[\w-]+(\.[a-z]{2,})(\/.*)?$/i.test(value)){
+  url="https://"+value;
+ }
+ else{
+  url="https://www.google.com/search?q="+
+  encodeURIComponent(value);
+ }
+
+ let history=JSON.parse(
+  localStorage.getItem("nexus_history")||"[]"
+ );
+
+ history.unshift(value);
+
+ localStorage.setItem(
+  "nexus_history",
+  JSON.stringify(history.slice(0,30))
+ );
+
+ window.open(url,"_blank");
+}
+
+function toggleMenu(){
+ let p=document.getElementById("popup");
+ p.style.display=
+ p.style.display==="block"?"none":"block";
+}
+
+function toggleTheme(){
+ document.body.classList.toggle("light");
+
+ if(document.body.classList.contains("light")){
+  document.body.style.background="#f5f3ff";
+  document.body.style.color="#222";
+ }else{
+  document.body.style.background="#15132f";
+  document.body.style.color="white";
+ }
+}
+
+function addWebsite(){
+ let name=prompt("Enter website name:");
+ if(!name)return;
+
+ let url=prompt("Enter website URL:");
+ if(!url)return;
+
+ if(!/^https?:\/\//i.test(url)){
+  url="https://"+url;
+ }
+
+ let a=document.createElement("a");
+ a.className="site";
+ a.href=url;
+
+ let icon=document.createElement("div");
+ icon.className="site-icon add";
+ icon.textContent=name.charAt(0).toUpperCase();
+
+ let label=document.createElement("span");
+ label.className="site-name";
+ label.textContent=name;
+
+ a.append(icon,label);
+
+ let dial=document.getElementById("speedDial");
+ dial.insertBefore(a,dial.lastElementChild);
+}
+
+function showHistory(){
+ let h=JSON.parse(
+  localStorage.getItem("nexus_history")||"[]"
+ );
+
+ alert(h.length?h.join("\n"):"No browsing history");
+}
+
+function showBookmarks(){
+ alert("Bookmarks feature will be added in the next update.");
+}
+
+function showQR(){
+ alert("QR Scanner will be added in a future update.");
+}
+
+function voiceSearch(){
+ if(!("webkitSpeechRecognition" in window)){
+  alert("Voice search is not supported in this browser.");
+  return;
+ }
+
+ let recognition=new webkitSpeechRecognition();
+ recognition.lang="en-US";
+ recognition.onresult=function(e){
+  document.getElementById("search").value=
+  e.results[0][0].transcript;
+ };
+ recognition.start();
+}
+
+</script>
+
+</body>
+</html>

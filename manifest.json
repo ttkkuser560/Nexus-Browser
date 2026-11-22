@@ -1,0 +1,12 @@
+{
+  "name": "NEXUS Browser",
+  "short_name": "NEXUS",
+  "description": "Explore the web with NEXUS Browser",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#15132f",
+  "theme_color": "#15132f",
+  "icons": []
+}
